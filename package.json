@@ -1,0 +1,13 @@
+{
+  "type": "module",
+  "scripts": {
+    "dev": "vite"
+  },
+  "devDependencies": {
+    "@hono/vite-dev-server": "^0.3.4",
+    "vite": "^5.0.10"
+  },
+  "dependencies": {
+    "hono": "^3.12.0"
+  }
+}
