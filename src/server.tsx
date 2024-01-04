@@ -9,7 +9,7 @@ app.get(
     return (
       <html>
         <body>
-          <script type="module" src="/src/client.tsx"></script>
+          <script type="module" src="/src/client.ts"></script>
         </body>
         <body>
           <nav>
