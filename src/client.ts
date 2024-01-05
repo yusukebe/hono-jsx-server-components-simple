@@ -1,29 +1,25 @@
 import { jsx as jsxFn } from 'hono/jsx'
 
-function scToCC({ tag, props, children }) {
-  return jsxFn(
-    tag,
-    props,
-    ...children.map((child) => {
-      if (Array.isArray(child)) {
-        return child.map((c) => scToCC(c))
-      } else {
-        return child.children ?? child
-      }
-    })
-  )
+function renderServerComponentToJSX({ tag, props, children }) {
+  const processedChildren = children.map((child) => {
+    if (typeof child === 'object' && child !== null) {
+      return renderServerComponentToJSX(child)
+    }
+    return child
+  })
+  return jsxFn(tag, props, ...processedChildren)
 }
 
-async function mountSC(pathname: string) {
+async function mountComponent(pathname: string) {
   const res = await fetch(`${pathname}?__sc`)
-  const sc = await res.json()
-  const cc = scToCC(sc)
+  const serverComponent = await res.json()
+  const jsx = renderServerComponentToJSX(serverComponent)
   const root = document.querySelector<HTMLElement>(`#root`)
-  root.innerHTML = await cc.toString()
+  root.innerHTML = await jsx.toString()
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
-  mountSC(window.location.pathname)
+  mountComponent(window.location.pathname)
 })
 
 window.addEventListener(
@@ -41,7 +37,7 @@ window.addEventListener(
     }
     e.preventDefault()
     window.history.pushState(null, null, href)
-    mountSC(href)
+    mountComponent(href)
   },
   true
 )
