@@ -12,7 +12,11 @@ app.get(
     return (
       <html>
         <body>
-          <script type="module" src="/src/client.ts"></script>
+          {import.meta.env.PROD ? (
+            <script type="module" src="/static/client.js"></script>
+          ) : (
+            <script type="module" src="/src/client.ts"></script>
+          )}
         </body>
         <body>
           <nav>

@@ -1,11 +1,14 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "build": "vite build && vite build --mode client",
+    "deploy": "$npm_execpath build && wrangler pages deploy ./dist"
   },
   "devDependencies": {
     "@hono/vite-dev-server": "^0.3.4",
-    "vite": "^5.0.10"
+    "vite": "^5.0.10",
+    "wrangler": "^3.22.3"
   },
   "dependencies": {
     "hono": "^3.12.0"
