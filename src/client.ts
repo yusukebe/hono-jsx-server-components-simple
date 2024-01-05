@@ -23,7 +23,8 @@ async function mountComponent(pathname: string) {
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
-  await mountComponent(window.location.pathname)
+  // Don't handle a server component when initial loading
+  //await mountComponent(window.location.pathname)
 })
 
 window.addEventListener(

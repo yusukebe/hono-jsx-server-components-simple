@@ -29,6 +29,11 @@ app.get(
             <a href="/htmx">htmx</a>
           </nav>
           <div id="root">{children}</div>
+          <footer>
+            <p>
+              <a href="https://github.com/yusukebe/hono-jsx-server-components-simple">Code</a>
+            </p>
+          </footer>
         </body>
       </html>
     )
