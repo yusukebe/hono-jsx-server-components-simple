@@ -11,13 +11,14 @@ app.get(
   jsxRenderer(({ children }) => {
     return (
       <html>
-        <body>
+        <head>
+          <meta name="viewport" content="width=device-width" />
           {import.meta.env.PROD ? (
             <script type="module" src="/static/client.js"></script>
           ) : (
             <script type="module" src="/src/client.ts"></script>
           )}
-        </body>
+        </head>
         <body>
           <nav>
             <a href="/">top</a>&nbsp;
