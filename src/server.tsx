@@ -42,7 +42,9 @@ const renderJSXToClientJSX = async (jsxElement: JSX.Element) => {
 
   if (typeof tag === 'function') {
     const returnedJSX = await tag(props)
-    return renderJSXToClientJSX(returnedJSX)
+    if (returnedJSX['tag'] !== '') {
+      return renderJSXToClientJSX(returnedJSX)
+    }
   }
 
   let resolvedChildren = []
