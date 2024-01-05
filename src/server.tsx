@@ -25,14 +25,19 @@ app.get(
 )
 
 const renderSC = (c: Context, element: JSX.Element) => {
-  if (c.req.query('sc') != undefined) {
+  if (c.req.query('__sc') != undefined) {
     return c.json(element)
   }
   return c.render(element)
 }
 
 app.get('/', (c) => {
-  return renderSC(c, <h1>Hello!</h1>)
+  return renderSC(
+    c,
+    <h1>
+      <b>Hello!</b>
+    </h1>
+  )
 })
 
 app.get('/posts/:id', (c) => {

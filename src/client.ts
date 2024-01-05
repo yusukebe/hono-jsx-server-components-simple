@@ -1,11 +1,25 @@
 import { jsx as jsxFn } from 'hono/jsx'
 
+function scToCC({ tag, props, children }) {
+  return jsxFn(
+    tag,
+    props,
+    ...children.map((child) => {
+      if (Array.isArray(child)) {
+        return child.map((c) => scToCC(c))
+      } else {
+        return child.children ?? child
+      }
+    })
+  )
+}
+
 async function mountSC(pathname: string) {
-  const res = await fetch(`${pathname}?sc`)
-  const data = await res.json()
-  const node = jsxFn(data.tag, data.props, ...data.children)
+  const res = await fetch(`${pathname}?__sc`)
+  const sc = await res.json()
+  const cc = scToCC(sc)
   const root = document.querySelector<HTMLElement>(`#root`)
-  root.innerHTML = await node.toString()
+  root.innerHTML = await cc.toString()
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
