@@ -16,10 +16,14 @@ async function mountComponent(pathname: string) {
   const jsx = renderServerComponentToJSX(serverComponent)
   const root = document.querySelector<HTMLElement>(`#root`)
   root.innerHTML = await jsx.toString()
+
+  // Force loading `htmx`
+  // @ts-expect-error there is no types for `htmx`
+  htmx.process(root)
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
-  mountComponent(window.location.pathname)
+  await mountComponent(window.location.pathname)
 })
 
 window.addEventListener(

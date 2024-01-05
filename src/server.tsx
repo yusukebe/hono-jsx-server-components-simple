@@ -18,13 +18,15 @@ app.get(
           ) : (
             <script type="module" src="/src/client.ts"></script>
           )}
+          <script src="https://unpkg.com/htmx.org@1.9.10"></script>
         </head>
         <body>
           <nav>
             <a href="/">top</a>&nbsp;
             <a href="/posts/good-morning">good-morning</a>&nbsp;
             <a href="/posts/good-night">good-night</a>&nbsp;
-            <a href="/about">about</a>
+            <a href="/about">about</a>&nbsp;
+            <a href="/htmx">htmx</a>
           </nav>
           <div id="root">{children}</div>
         </body>
@@ -88,6 +90,22 @@ app.get('/about', (c) => {
       <Title name="JSX" />
     </div>
   )
+})
+
+app.get('/htmx', (c) => {
+  return renderServerComponent(
+    c,
+    <>
+      <h1>with htmx</h1>
+      <button hx-post="/clicked" hx-swap="outerHTML">
+        Click Me
+      </button>
+    </>
+  )
+})
+
+app.post('/clicked', (c) => {
+  return c.text('Clicked')
 })
 
 export default app
